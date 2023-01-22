@@ -33,7 +33,7 @@ def plot_training_history(history):
     plt.ylabel('Accuracy')
     plt.xlabel('Epoch')
     plt.legend(['Train', 'Validation'], loc='upper left')
-    plt.show()
+    plt.savefig('A2_train.png')
 
     # Plot the training and validation loss over the epochs
     plt.plot(history.history['loss'])
@@ -42,7 +42,7 @@ def plot_training_history(history):
     plt.ylabel('Loss')
     plt.xlabel('Epoch')
     plt.legend(['Train', 'Validation'], loc='upper left')
-    plt.show()
+    plt.savefig('A2_val.png')
 
 def create_data(train_img_dir, test_img_dir, index, train_labels_path, test_labels_path, val_percentage):
     # Load the labels
