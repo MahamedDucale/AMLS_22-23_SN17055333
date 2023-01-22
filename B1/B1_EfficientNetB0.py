@@ -15,6 +15,11 @@ def preprocess(path, label):
     # Data augmentation
     image = tf.image.random_flip_left_right(image)
     image = tf.image.random_flip_up_down(image)
+    image = tf.image.random_brightness(image, max_delta=0.1)
+    image = tf.image.random_contrast(image, lower=0.9, upper=1.1)
+    image = tf.image.random_hue(image, max_delta=0.1)
+    image = tf.image.random_saturation(image, lower=0.9, upper=1.1)
+    image = tf.clip_by_value(image, 0, 1)
     return image, label
 
 
@@ -63,7 +68,7 @@ def create_data(train_img_dir, test_img_dir, index, train_labels_path, test_labe
 
 train_img_dir = "Datasets/cartoon_set/img/"
 test_img_dir = "Datasets/cartoon_set_test/img/"
-index = 1
+index = 2
 train_labels_path = "Datasets/cartoon_set/labels.csv"
 test_labels_path = "Datasets/cartoon_set_test/labels.csv"
 val_percentage = 0.2
