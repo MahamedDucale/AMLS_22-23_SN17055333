@@ -4,18 +4,18 @@ import tensorflow as tf
 from tensorflow import keras
 import matplotlib.pyplot as plt
 import pandas as pd 
-from keras.applications.resnet import preprocess_input
+from keras.applications.resnet_v2 import preprocess_input
 from keras.utils import to_categorical
 
 def preprocess(path, label):
     label = tf.strings.to_number(label, out_type=tf.int32)
     image = tf.io.read_file(path)
-    image = tf.image.decode_jpeg(image, channels=3)
+    image = tf.image.decode_png(image, channels=3)
     image = tf.image.resize(image, [224, 224])
     image = preprocess_input(image)
-    # Data augmentation
     image = tf.image.random_flip_left_right(image)
     image = tf.image.random_flip_up_down(image)
+    label = tf.one_hot(label, depth=5)
     return image, label
 
 
@@ -103,7 +103,7 @@ x = keras.layers.GlobalAveragePooling2D()(x)
 outputs = keras.layers.Dense(5, activation="softmax")(x)
 model = keras.Model(inputs, outputs)
 
-model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
 
 model.summary()
